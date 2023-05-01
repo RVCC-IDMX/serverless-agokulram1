@@ -1,44 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="favicon.png" type="image/png">
-    <title>Jamstack Explorers - Up and Running with Serverless Functions</title>
-  </head>
-  <body>
-    <h1>Up and Running with Serverless Functions</h1>
-    <button id="fetch-btn">Fetch</button>
-    <button id="fetch-pokedex-btn">Fetch Pokedex</button>
-    <button id="fetch-Kanto-btn">Fetch Kanto Pokedex</button>
-    <button id="fetch-Hoenn-btn">Fetch Hoenn Pokedex </button>
-    <p id="response-output">Response Placeholder</p>
-    
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const fetchBtn = document.getElementById('fetch-btn')
-        const fetchPokedexBtn = document.getElementById('fetch-pokedex-btn')
-        const fetchKantoBtn = document.getElementById('fetch-Kanto-btn')
-        const fetchHoennBtn = document.getElementById('fetch-Hoenn-btn')
-        const responseText = document.getElementById('response-output')
-        fetchPokedexBtn.addEventListener('click', async () => {
-          const response = await fetch('/.netlify/functions/pokedex',{
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.png" type="image/png">
+  <title>Jamstack Explorers - Up and Running with Serverless Functions</title>
+</head>
+
+<body>
+  <h1>Up and Running with Serverless Functions</h1>
+  <button id="fetch-btn">Fetch</button>
+  <button id="fetch-Kanto-btn">Fetch Kanto Pokedex</button>
+  <button id="fetch-Hoenn-btn">Fetch Hoenn Pokedex </button>
+  <p id="response-output">Response Placeholder</p>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const fetchBtn = document.getElementById('fetch-btn')
+
+      const fetchKantoBtn = document.getElementById('fetch-Kanto-btn')
+      const fetchHoennBtn = document.getElementById('fetch-Hoenn-btn')
+      const responseText = document.getElementById('response-output')
+      // fetchPokedexBtn.addEventListener('click', async () => {
+      //   const response = await fetch('/.netlify/functions/pokedex', {
+      //     method: 'POST',
+      //     body: JSON.stringify({
+      //       region: 'kanto'
+      //     })
+      //   }).then(response => response.json())
+      //   responseText.innerText = JSON.stringify(response)
+      // })
+      fetchBtn.addEventListener('click', async () => {
+        const response = await fetch('/.netlify/functions/hello-world').then(response => response.json()
+        )
+
+        responseText.innerText = JSON.stringify(response)
+      })
+
+      fetchKantoBtn.addEventListener('click', async () => {
+        const response = await fetch('/.netlify/functions/pokedex',
+          {
             method: 'POST',
             body: JSON.stringify({
               region: 'kanto'
             })
-          }).then(response => response.json())
-          responseText.innerText = JSON.stringify(response)
-        })
-        fetchBtn.addEventListener('click', async () => {
-          const response = await fetch('/.netlify/functions/hello-world').then(response => response.json()
-          )
-
-          responseText.innerText = JSON.stringify(response)
-        })
+          }).then(response => response.json());
+        responseText.innerText = JSON.stringify(response);
       })
-    </script>
-  </body>
+
+      fetchHoennBtn.addEventListener('click', async () => {
+        const response = await fetch('/.netlify/functions/pokedex',
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              region: 'hoenn'
+            })
+          }).then(response => response.json());
+        responseText.innerText = JSON.stringify(response);
+      })
+
+
+    });
+  </script>
+</body>
+
 </html>
